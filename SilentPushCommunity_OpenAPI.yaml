@@ -140,7 +140,7 @@ components:
                 subnet_allocation_age:
                     type: int
                     description: How many days ago the IPs subnet was allocated
-                subnet_allocation_age:
+                subnet_allocation_date:
                     type: int
                     description: The date the IPs subnet was allocated
                 subnet_reputation:
