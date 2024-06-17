@@ -146,6 +146,6 @@ components:
                 subnet_reputation:
                     type: int
                     description: The reputation of the IPs subnet
-                subnet_reputation:
+                subnet_reputation_score:
                     type: int
                     description: The reputation score of the IPs subnet
