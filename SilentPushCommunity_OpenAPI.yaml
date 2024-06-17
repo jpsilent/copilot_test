@@ -1,0 +1,151 @@
+openapi: 3.0.0
+
+info:
+    title: Silent Push API
+    description: Silent Push API for IP Enrichment
+    version: "v1"
+
+servers:
+    - url: https://api.silentpush.com/api/v1/merge-api/
+
+paths:
+    /explore/enrich/ipv4/{ipv4}:
+        get:
+            operationId: getEnrichmentDataForIPv4Address.
+            summary: Get enrichment data for an IPv4 address.
+            description: |
+                This endpoint allows you to check an IPv4 address against the Silent Push database.
+                #ExamplePrompts Tell me about IP address "118.25.6.39" using Silent Push
+                #ExamplePrompts Use Silent Push to provide info on "118.25.6.39"
+                #ExamplePrompts What does the Silent Push database say about the IP address 180.126.219.127?
+                #ExamplePrompts I'm curious about any Silent Push records for the IP address 180.126.219.127. Can you look that up?
+                #ExamplePrompts Can you provide me with information on any Silent Push reports for the IP address 180.126.219.127?
+                #ExamplePrompts I'd like to know if there are any Silent Push entries for the IP address 180.126.229.127. Can you check this?
+                #ExamplePrompts Could you give me an overview of the Silent Push records for the IP address 180.126.229.127?
+            parameters:
+                - in: path
+                  name: ipv4
+                  schema:
+                      type: string
+                  required: true
+                  description: The IP address to lookup
+            responses:
+                "401":
+                    description: Unauthorized
+                "404":
+                    description: Not Found
+                "429":
+                    description: Rate Limit Exceeded
+                "500":
+                    description: Internal Server Error
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/EnrichIPResponse"
+
+components:
+    schemas:
+        EnrichIPResponse:
+            type: object
+            properties:
+                asn:
+                    type: int
+                    description: The ASN hosting the IP
+                asn_allocation_age:
+                    type: int
+                    description: How many days ago an ASN was allocated
+                asn_allocation_date:
+                    type: int
+                    description: The date an ASN was allocated
+                asn_rank:
+                    type: int
+                    description: The rank of the IPs ASN
+                asn_rank_score:
+                    type: int
+                    description: The score of the ASN rank
+                asn_reputation:
+                    type: int
+                    description: The reputation of the IPs ASN  
+                asn_reputation_score:
+                    type: int
+                    description: The reputation score of the IPs ASN
+                asn_takedown_reputation:
+                    type: int
+                    description: The ASN takedown reputation of the IPs ASN
+                asn_takedown_reputation_score:
+                    type: int
+                    description: The ASN takedown reputation score of the IPs ASN
+                asname:
+                    type: string
+                    description: The name of the ASN hosting the IP
+                benign_info:
+                    type: array
+                    description: Information about whether an IP is known benign
+                date:
+                    type: int
+                    description: The current date
+                density:
+                    type: int
+                    description: The density of the IP address (number of domain names hosted)
+                ip:
+                    type: string
+                    description: The IP address
+                ip_has_expired_certificate:
+                    type: boolean
+                    description: Indicates whether the IP has an expired certificate
+                ip_has_open_directory:
+                    type: boolean
+                    description: Indicates whether the IP has an open directory
+                ip_is_dsl_dynamic:
+                    type: boolean
+                    description: Indicates whether the IP has dynamic DSL
+                ip_is_dsl_dynamic_score:
+                    type: int
+                    description: Indicates the IP dynamic DSL score
+                ip_is_ipfs_node:
+                    type: boolean
+                    description: Indicates whether the IP is an IPFS node or not
+                ip_is_tor_exit_node:
+                    type: boolean
+                    description: Indicates whether the IP is a Tor exit node or not
+                ip_location:
+                    type: array
+                    description: Indicates the geolocation information for an IP
+                ip_ptr:
+                    type: string
+                    description: Indicates any PTR record for the IP
+                ip_reputation:
+                    type: int
+                    description: The reputation of the IP
+                ip_reputation_score:
+                    type: int
+                    description: The reputation score of the IP
+                listing_score:
+                    type: int
+                    description: The listing score of the IP, indicating whether it is on an Indicator of Future Attack Feed
+                malscore:
+                    type: int
+                    description: The malscore of the IP
+                sinkhole_info:
+                    type: array
+                    description: Information about whether the IP has been sinkholed
+                sp_risk_score:
+                    type: int
+                    description: The Silent Push risk score of the IP
+                subnet:
+                    type: string
+                    description: The subnet of the IP
+                subnet_allocation_age:
+                    type: int
+                    description: How many days ago the IPs subnet was allocated
+                subnet_allocation_age:
+                    type: int
+                    description: The date the IPs subnet was allocated
+                subnet_reputation:
+                    type: int
+                    description: The reputation of the IPs subnet
+                subnet_reputation:
+                    type: int
+                    description: The reputation score of the IPs subnet
