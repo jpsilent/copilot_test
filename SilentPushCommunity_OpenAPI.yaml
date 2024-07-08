@@ -9,7 +9,7 @@ servers:
     - url: https://api.silentpush.com/api/v1/merge-api/
 
 paths:
-    /explore/enrich/ipv4/{ipv4}:
+    /explore/enrich/ipv4/:
         get:
             operationId: getEnrichmentDataForIPv4Address.
             summary: Get enrichment data for an IPv4 address.
@@ -23,7 +23,7 @@ paths:
                 #ExamplePrompts I'd like to know if there are any Silent Push entries for the IP address 180.126.229.127. Can you check this?
                 #ExamplePrompts Could you give me an overview of the Silent Push records for the IP address 180.126.229.127?
             parameters:
-                - in: path
+                - in: query
                   name: ipv4
                   schema:
                       type: string
